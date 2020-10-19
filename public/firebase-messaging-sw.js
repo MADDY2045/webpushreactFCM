@@ -14,16 +14,19 @@ var config = {
 
   firebase.initializeApp(config);
 
-  const messaging = firebase.messaging();
+  const messaging = firebase.messaging()
 
-  messaging.setBackgroundMessageHandler( payload=>{
-      const title = 'Hello World';
-      var options = {
-          body: payload.data.status
-      }
-      return self.registration.showNotification(title,options);
-  } )
 
-//   messaging.onMessage(function (payload) {
-//     console.log("Message received. ", JSON.stringify(payload));
-//    });
+  messaging.setBackgroundMessageHandler(function (payload) {
+    console.log('[firebase-messaging-sw.js] Received background message ', payload);
+    const notification = payload.data;
+    // Customize notification here
+    const notificationTitle = notification.title;
+    const notificationOptions = {
+        body: notification.body,
+        icon: notification.icon
+    };
+
+  return self.registration.showNotification(notificationTitle,
+        notificationOptions);
+});
