@@ -15,7 +15,9 @@
     word-wrap: break-word;
     padding:30px;
     margin:auto;
-    text-align: justify
+    text-align: justify;
+    font-family: "Sofia", sans-serif;
+    text-shadow: 3px 3px 3px #ababab;
 }
 
 #copy-button{

@@ -6,7 +6,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import {CopyToClipboard} from 'react-copy-to-clipboard';
 
 const EnableNotifications = () => {
-
+  const [btn,setBtn]=useState('btn btn-success')
   const [notification,setNotification] = useState('');
   const [token,setToken] = useState('');
   const [showNotificationFlag,setshowNotificationFlag] = useState(false);
@@ -14,6 +14,8 @@ const EnableNotifications = () => {
   const [ copied,setCopied ] = useState(false);
 
 const handleFCMtoken =()=>{
+  setCopied(false);
+  setBtn('btn btn-success');
   const messaging = firebase.messaging();
   messaging
     .requestPermission()
@@ -37,49 +39,37 @@ const handleFCMtoken =()=>{
 
   useEffect(()=>{
     console.log('app started');
-    firebase.initializeApp({
-      apiKey: "AIzaSyBISz2uV1dAZ4ND6yPDxFEzFGb-mO5MSoY",
-      authDomain: "fcm-webpush-notification.firebaseapp.com",
-      databaseURL: "https://fcm-webpush-notification.firebaseio.com",
-      projectId: "fcm-webpush-notification",
-      storageBucket: "fcm-webpush-notification.appspot.com",
-      messagingSenderId: "671401892295",
-      appId: "1:671401892295:web:2cd5ca0ed1ad9c88d821e2",
-      measurementId: "G-QSPLTPZ290"
-    })
+    if (!firebase.apps.length) {
+      firebase.initializeApp({
+        apiKey: "AIzaSyBISz2uV1dAZ4ND6yPDxFEzFGb-mO5MSoY",
+        authDomain: "fcm-webpush-notification.firebaseapp.com",
+        databaseURL: "https://fcm-webpush-notification.firebaseio.com",
+        projectId: "fcm-webpush-notification",
+        storageBucket: "fcm-webpush-notification.appspot.com",
+        messagingSenderId: "671401892295",
+        appId: "1:671401892295:web:2cd5ca0ed1ad9c88d821e2",
+        measurementId: "G-QSPLTPZ290"
+      })
 
-    window.firebase.messaging().onMessage( payload=> {
+      window.firebase.messaging().onMessage( payload=> {
 
-      console.log("Message serverv received. ", JSON.stringify(payload.data.body));
-      setTimeout(()=>{
-        setNotification('');
-      },0)
-      setTimeout(()=>{
-        setNotification(payload.data.body);
-        setBadgeflag(true);
-        toast.success(payload.data.body);
-        // window.navigator.serviceWorker.ready.then(function(serviceWorker) {
-        //   serviceWorker.showNotification("Hello Background", payload.data.body);
-        // });
-      },100)
+        console.log("Message serverv received. ", JSON.stringify(payload.data.body));
+        setTimeout(()=>{
+          setNotification('');
+        },0)
+        setTimeout(()=>{
+          setNotification(payload.data.body);
+          setBadgeflag(true);
+          toast.success(payload.data.body);
+          // window.navigator.serviceWorker.ready.then(function(serviceWorker) {
+          //   serviceWorker.showNotification("Hello Background", payload.data.body);
+          // });
+        },100)
 
-  });
+    });
 
-
-// const messaging = firebase.messaging();
-
-    // messaging.onTokenRefresh(function (messaging) {
-    //       messaging.getToken()
-    //           .then(function (refreshedToken) {
-    //               console.log('Token refreshed.');
-    //               //tokenElement.innerHTML = "Token is " + refreshedToken;
-    //           }).catch(function (err) {
-    //               //errorElement.innerHTML = "Error: " + err;
-    //               console.log('Unable to retrieve refreshed token ', err);
-    //           });
-    //     });
-
-  },[])
+}
+},[token])
 
   const showNotification = ()=>{
     setshowNotificationFlag(true);
@@ -98,8 +88,11 @@ const handleFCMtoken =()=>{
       {token !==''? <div id="token">
         <CopyToClipboard text={token}
           style={{padding:"10px"}}
-          onCopy={() => setCopied(true)}>
-          <button id="copy-button" className="btn btn-success" disabled={copied}>{copied ? 'Copied':'Copy to clipboard'}</button>
+          onCopy={() => {
+            setCopied(true)
+            setBtn('btn btn-danger')
+            }}>
+          <button id="copy-button" className={btn} disabled={copied}>{copied ? 'Copied':'Copy to clipboard'}</button>
         </CopyToClipboard>{token !== '' ? <div>{token}</div> :null}</div>:null}
       <ToastContainer />
     </div>
