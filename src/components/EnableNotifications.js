@@ -1,7 +1,9 @@
 import React,{useEffect,useState} from 'react';
 import firebase from 'firebase';
 import '../App.css';
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import {CopyToClipboard} from 'react-copy-to-clipboard';
 
 const EnableNotifications = () => {
 
@@ -9,6 +11,7 @@ const EnableNotifications = () => {
   const [token,setToken] = useState('');
   const [showNotificationFlag,setshowNotificationFlag] = useState(false);
   const [badgeflag,setBadgeflag] = useState(true);
+  const [ copied,setCopied ] = useState(false);
 
 const handleFCMtoken =()=>{
   const messaging = firebase.messaging();
@@ -44,7 +47,9 @@ const handleFCMtoken =()=>{
       appId: "1:671401892295:web:2cd5ca0ed1ad9c88d821e2",
       measurementId: "G-QSPLTPZ290"
     })
+
     window.firebase.messaging().onMessage( payload=> {
+
       console.log("Message serverv received. ", JSON.stringify(payload.data.body));
       setTimeout(()=>{
         setNotification('');
@@ -52,6 +57,10 @@ const handleFCMtoken =()=>{
       setTimeout(()=>{
         setNotification(payload.data.body);
         setBadgeflag(true);
+        toast.success(payload.data.body);
+        // window.navigator.serviceWorker.ready.then(function(serviceWorker) {
+        //   serviceWorker.showNotification("Hello Background", payload.data.body);
+        // });
       },100)
 
   });
@@ -85,8 +94,14 @@ const handleFCMtoken =()=>{
       {notification !=='' && badgeflag ?  <div onClick={showNotification} id="notification-badge"></div>:null}
      </h1>
   {showNotificationFlag && !badgeflag ? <h1>{notification}</h1>:null}
-      <button onClick={handleFCMtoken}>Get FCM token</button>
-      <h1>{token !== '' ? token :null}</h1>
+      <button className="btn btn-outline-info" onClick={handleFCMtoken}>Get FCM token</button>
+      {token !==''? <div id="token">
+        <CopyToClipboard text={token}
+          style={{padding:"10px"}}
+          onCopy={() => setCopied(true)}>
+          <button id="copy-button" className="btn btn-success" disabled={copied}>{copied ? 'Copied':'Copy to clipboard'}</button>
+        </CopyToClipboard>{token !== '' ? <div>{token}</div> :null}</div>:null}
+      <ToastContainer />
     </div>
   );
 }
