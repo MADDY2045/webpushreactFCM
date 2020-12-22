@@ -1,12 +1,20 @@
 #notification-badge{
-    position: relative;
-    background: red;
+    position: absolute;
+    background:white;
     min-height: 20px;
     width: 20px;
     left:30px;
-    top:-50px;
+    top:0px;
+    color:black;
     border-radius: 90%;
-    font-size: smaller;
+    font-size: 16px;
+    text-align: center;
+}
+
+#message{
+    color: white;
+    position: relative;
+    left:-20px;
 }
 
 #token{
@@ -14,7 +22,7 @@
     max-width: 500px;
     word-wrap: break-word;
     padding:30px;
-    margin:auto;
+    margin:20px auto;
     text-align: justify;
     font-family: "Sofia", sans-serif;
     text-shadow: 3px 3px 3px #ababab;
@@ -24,4 +32,15 @@
     max-width: 440px;
     min-width: 440px;
     margin:auto;
+}
+
+#nav{
+    max-height: 100px;
+    min-height: 100px;
+}
+
+#getfcmbtn{
+   position: absolute;
+   top:400px;
+   left:800px;
 }

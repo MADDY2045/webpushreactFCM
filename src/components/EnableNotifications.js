@@ -4,8 +4,14 @@ import '../App.css';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import {CopyToClipboard} from 'react-copy-to-clipboard';
+import StatusModal from './StatusModal';
 
 const EnableNotifications = () => {
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
   const [btn,setBtn]=useState('btn btn-success')
   const [notification,setNotification] = useState('');
   const [token,setToken] = useState('');
@@ -72,6 +78,7 @@ const handleFCMtoken =()=>{
 },[token])
 
   const showNotification = ()=>{
+    setShow(true);
     setshowNotificationFlag(true);
     setBadgeflag(false)
   }
@@ -79,12 +86,17 @@ const handleFCMtoken =()=>{
 
   return (
     <div>
-      <h1>FCM Notification</h1>
-      <h1 id="message"><i className="fa fa-bell" aria-hidden="true"></i>
-      {notification !=='' && badgeflag ?  <div onClick={showNotification} id="notification-badge"></div>:null}
+      <nav  id="nav" className="navbar navbar-dark bg-primary">
+        <h1 style={{color:'white'}}>FCM Notification</h1>
+        <h1 id="message"><i className="fa fa-bell-o" aria-hidden="true"></i>
+        {notification !=='' && badgeflag ?  <div onClick={showNotification} id="notification-badge">1</div>:null}
      </h1>
-  {showNotificationFlag && !badgeflag ? <h1>{notification}</h1>:null}
-      <button className="btn btn-outline-info" onClick={handleFCMtoken}>Get FCM token</button>
+        {/* {showNotificationFlag && !badgeflag ? <h1>{notification}</h1>:null} */}
+      </nav>
+
+      <button
+      id="getfcmbtn"
+      className="btn btn-outline-info" onClick={handleFCMtoken}>Get FCM token</button>
       {token !==''? <div id="token">
         <CopyToClipboard text={token}
           style={{padding:"10px"}}
@@ -94,7 +106,8 @@ const handleFCMtoken =()=>{
             }}>
           <button id="copy-button" className={btn} disabled={copied}>{copied ? 'Copied':'Copy to clipboard'}</button>
         </CopyToClipboard>{token !== '' ? <div>{token}</div> :null}</div>:null}
-      <ToastContainer />
+      {/* <ToastContainer /> */}
+      <StatusModal show={show} handleClose={handleClose} notification={notification} />
     </div>
   );
 }
