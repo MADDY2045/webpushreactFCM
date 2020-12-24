@@ -30,3 +30,4 @@ var config = {
   return self.registration.showNotification(notificationTitle,
         notificationOptions);
 });
+

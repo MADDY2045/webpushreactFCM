@@ -4,8 +4,9 @@ import '../App.css';
 import 'react-toastify/dist/ReactToastify.css';
 import {CopyToClipboard} from 'react-copy-to-clipboard';
 import StatusModal from './StatusModal';
+import { Link } from 'react-router-dom';
 
-const EnableNotifications = () => {
+const EnableNotifications = (props) => {
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
@@ -39,6 +40,7 @@ const handleFCMtoken =()=>{
 
 
   useEffect(()=>{
+    //window.addEventListener('focus', ()=>alert('active'));
     console.log('app started');
     if (!firebase.apps.length) {
       firebase.initializeApp({
@@ -59,12 +61,24 @@ const handleFCMtoken =()=>{
           setNotification('');
         },0)
         setTimeout(()=>{
-          setNotification(payload.data.body);
-          setBadgeflag(true);
-         // window.navigator.serviceWorker.ready.then(function(serviceWorker) {
-          //   serviceWorker.showNotification("Hello Background", payload.data.body);
-          // });
-        },100)
+          //setNotification(payload.data.body);
+          //setBadgeflag(true);
+          var options ={
+            body : payload.data.body,
+            tag : payload.data.tag,
+            icon : 'https://cdn3.iconfinder.com/data/icons/picons-social/57/43-twitter-512.png'
+          }
+          var notification = new Notification(payload.data.title,options);
+          notification.onclick = async function(){
+          console.log(window.location.href);
+          notification.close();
+          //props.history.push('/')
+          let url='http://localhost:3004/t';
+          // window.location.assign(window.location.href)
+          window.open(url, "_top");
+          //await window.opener.focus();
+         };
+      },100)
 
     });
 
