@@ -13,57 +13,41 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
     <script>
-      let config = {
-        // apiKey: "AIzaSyBISz2uV1dAZ4ND6yPDxFEzFGb-mO5MSoY",
-        // authDomain: "fcm-webpush-notification.firebaseapp.com",
-        // databaseURL: "https://fcm-webpush-notification.firebaseio.com",
-        // projectId: "fcm-webpush-notification",
-        // storageBucket: "fcm-webpush-notification.appspot.com",
-        messagingSenderId: "671401892295",
-        // appId: "1:671401892295:web:2cd5ca0ed1ad9c88d821e2",
-        // measurementId: "G-QSPLTPZ290"
-      }
-        firebase.initializeApp(config);
-        const messaging = firebase.messaging();
-        messaging.onTokenRefresh(function () {
-            messaging.getToken()
-                .then(function (refreshedToken) {
-                    console.log(`Token refreshed.......${refreshedToken}`);
-                    //tokenElement.innerHTML = "Token is " + refreshedToken;
-                }).catch(function (err) {
-                    //errorElement.innerHTML = "Error: " + err;
-                    console.log('Unable to retrieve refreshed token ', err);
-                });
-        });
-
-        // console.log(`browser name is ${navigator.appVersion}`);
-        // const refreshedToken = messaging.onTokenRefresh();
-        // console.log(`refreshedToken is ${refreshedToken}`);
-
-      // if (firebase.apps.length === 0) {
-      //   firebase.initializeApp(config);
-      //   window.firebase.messaging().onMessage( payload=> {
-      //   var options ={
-      //       body : payload.data.body,
-      //       tag : payload.data.tag,
-      //       icon : 'https://cdn3.iconfinder.com/data/icons/picons-social/57/43-twitter-512.png'
-      //     }
-      //   alert(payload.data.title);
-      //   var notify = new Notification(payload.data.title,options);
-      //           notify.onclick = function(){
-      //     console.log(window.location.href);
-      //     notify.close();
-      //     //props.history.replace('/t')
-      //     let url='http://localhost:3004/t';
-      //     //window.location.assign(window.location.href)
-      //     window.open(url, "_top");
-      //   };
-      // })
-      // }else{
-      //   // firebase.initializeApp(config);
-      //   // const messaging = firebase.messaging();
+      // let config = {
+      //   apiKey: "AIzaSyBISz2uV1dAZ4ND6yPDxFEzFGb-mO5MSoY",
+      //   authDomain: "fcm-webpush-notification.firebaseapp.com",
+      //   databaseURL: "https://fcm-webpush-notification.firebaseio.com",
+      //   projectId: "fcm-webpush-notification",
+      //   storageBucket: "fcm-webpush-notification.appspot.com",
+      //   messagingSenderId: "671401892295",
+      //   appId: "1:671401892295:web:2cd5ca0ed1ad9c88d821e2",
+      //   measurementId: "G-QSPLTPZ290"
       // }
+    //     firebase.initializeApp(config);
 
+    //     const messaging = firebase.messaging();
+    //    messaging.requestPermission()
+    // .then(() => {
+    //   console.log('Notification permission granted.')
+    //   return messaging.getToken()
+    // }).then( token =>{
+    //   console.log(`token new is ${token}`)
+    // })
+    // .catch((err) => {
+    //   console.log('Unable to get permission to notify. ', err)
+    // })
+
+
+        // messaging.onTokenRefresh(function () {
+        //     messaging.getToken()
+        //         .then(function (refreshedToken) {
+        //             console.log(`Token refreshed.......${refreshedToken}`);
+        //             //tokenElement.innerHTML = "Token is " + refreshedToken;
+        //         }).catch(function (err) {
+        //             //errorElement.innerHTML = "Error: " + err;
+        //             console.log('Unable to retrieve refreshed token ', err);
+        //         });
+        // });
       </script>
     <meta name="theme-color" content="#000000" />
     <meta
